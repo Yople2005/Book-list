@@ -1,0 +1,74 @@
+.App {
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.App-header {
+  background-color: #282c34;
+  padding: 20px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.filters {
+  margin: 20px 0;
+}
+
+.search-input {
+  padding: 10px;
+  font-size: 16px;
+  margin: 10px;
+  width: 300px;
+}
+
+.filter-select {
+  margin: 10px;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.book-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.book-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 10px;
+  width: 80%;
+  max-width: 600px;
+  text-align: left;
+  background-color: #f9f9f9;
+}
+
+.book-card h2 {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.book-card p {
+  margin: 5px 0;
+  color: #555;
+}
+
+.status-available {
+  color: green;
+}
+
+.status-borrowed {
+  color: red;
+}
+
+/* Responsive styles */
+@media (max-width: 600px) {
+  .search-input, .filter-select {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
