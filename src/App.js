@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faExternalLinkAlt, faDownload } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faChevronUp, faExternalLinkAlt, faDownload, faBars, faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 import {
   FacebookShareButton, ViberShareButton, TelegramShareButton,
   FacebookIcon, ViberIcon, TelegramIcon
@@ -13,13 +13,16 @@ function App() {
   const [majorFilter, setMajorFilter] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
   const [selectedBook, setSelectedBook] = useState(null);
+  const [showBackToTop, setShowBackToTop] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch('https://sheets.googleapis.com/v4/spreadsheets/1rrkZkt2GHRdSGi-zrqRgiseThigJ5aF41uLTq2UdliM/values/Sheet1?key=AIzaSyDY9bw7SI7wUnWn3iGu2E4dvthqD7BUb3U');
         const data = await response.json();
-        const rows = data.values.slice(1); // Skip header row
+        const rows = data.values.slice(1);
         const books = rows.map(row => ({
           id: row[0],
           title: row[1],
@@ -37,6 +40,19 @@ function App() {
       }
     };
     fetchData();
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 300) {
+        setShowBackToTop(true);
+      } else {
+        setShowBackToTop(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
@@ -58,19 +74,54 @@ function App() {
     setSelectedBook(null);
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
-    <div className="App min-h-screen bg-gray-100 p-6">
-      <header className="bg-blue-500 text-white p-6 rounded-lg shadow-lg mb-6">
-        <h1 className="text-3xl font-bold mb-4">Book Search</h1>
-        <div className="flex flex-col md:flex-row gap-4 items-center">
+    <div className="App min-h-screen bg-gray-100 p-3">
+      {/* Navigation & Header */}
+      <header className=" bg-blue-500 text-white p-3 rounded-lg shadow-lg mb-6 flex justify-between items-center sticky top-0 z-50">
+        <div className="flex items-center">
+          <button onClick={() => setMenuOpen(!menuOpen)} className="text-white text-3xl mr-4">
+            <FontAwesomeIcon icon={faBars} />
+          </button>
+          <div className="flex items-center">
+            <img src="logo.png" alt="Library Logo" className="w-10 h-10 mr-3 ml-5" />
+            <h1 className="text-3xl font-bold">Innovative Library</h1>
+          </div>
+        </div>
+        <button onClick={() => setSearchOpen(!searchOpen)} className="text-white text-3xl">
+          <FontAwesomeIcon icon={faSearch} />
+        </button>
+      </header>
+
+      {/* Side Navigation Menu */}
+      {menuOpen && (
+        <nav className="fixed inset-y-0 left-0 w-64 bg-blue-700 text-white p-6 z-50 shadow-lg">
+          <button onClick={() => setMenuOpen(false)} className="text-white mb-6">
+            <FontAwesomeIcon icon={faTimes} />
+          </button>
+          <ul className="space-y-4">
+            <li><a href="#home" className="hover:text-gray-200">Home</a></li>
+            <li><a href="#about" className="hover:text-gray-200">About</a></li>
+            <li><a href="#contact" className="hover:text-gray-200">Contact</a></li>
+            {/* Add more navigation links as needed */}
+          </ul>
+        </nav>
+      )}
+
+      {/* Search Bar & Filters */}
+      {searchOpen && (
+        <div className="fixed top-16 left-3 right-3 w-auto bg-blue-100 p-4 rounded-b-lg shadow-lg z-40">
           <input
             type="text"
             value={query}
             onChange={e => setQuery(e.target.value)}
             placeholder="Search by Title or Author"
-            className="p-3 border border-blue-300 rounded-lg bg-blue-50 text-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-400 flex-1 md:flex-none md:w-2/3 lg:w-3/4"
+            className="w-full p-3 border border-blue-300 rounded-lg bg-blue-50 text-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
-          <div className="flex flex-col md:flex-row w-full md:w-auto gap-4 md:gap-4 mt-4 md:mt-0">
+          <div className="flex flex-col md:flex-row w-full gap-4 mt-4">
             <div className="relative flex-1">
               <select 
                 value={majorFilter} 
@@ -102,8 +153,10 @@ function App() {
             </div>
           </div>
         </div>
-      </header>
-      <main>
+      )}
+
+      {/* Main Content */}
+      <main className="pt-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredBooks.length > 0 ? (
             filteredBooks.map((book, index) => (
@@ -124,75 +177,48 @@ function App() {
               </div>
             ))
           ) : (
-            <p className="text-gray-700">No books found.</p>
+            <p>No books found</p>
           )}
         </div>
       </main>
+
+      {/* Book Popup */}
       {selectedBook && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-11/12 md:w-3/4 lg:w-1/2 relative">
-            <h2 className="text-2xl font-bold mb-4">{selectedBook.title}</h2>
-            <div className="space-y-2 mb-4">
-              <p className="text-gray-700"><strong>ID:</strong> {selectedBook.id}</p>
-              <p className="text-gray-700"><strong>Author:</strong> {selectedBook.author}</p>
-              <p className="text-gray-700"><strong>Major:</strong> {selectedBook.major}</p>
-              <p className={`text-gray-700 font-semibold ${selectedBook.status === 'Available' ? 'text-green-600' : 'text-red-600'}`}>
-                <strong>Status:</strong> {selectedBook.status}
-              </p>
-              <p className="text-gray-700"><strong>Summary:</strong> {selectedBook.summary}</p>
-              <p className="text-gray-700"><strong>Location:</strong> {selectedBook.location}</p>
-            </div>
-            <div className="space-y-2 mt-4">
-              <a 
-                href={selectedBook.readLink} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="flex items-center text-blue-500 hover:text-blue-600"
-              >
-                <FontAwesomeIcon icon={faExternalLinkAlt} className="w-5 h-5 mr-2" />
-                <span className="ml-2">Read Link</span>
-              </a>
-              <a 
-                href={selectedBook.downloadLink} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="flex items-center text-blue-500 hover:text-blue-600"
-              >
-                <FontAwesomeIcon icon={faDownload} className="w-5 h-5 mr-2" />
-                <span className="ml-2">Download PDF</span>
-              </a>
-              <div className="flex gap-4 mt-4">
-                <FacebookShareButton
-                  url={selectedBook.readLink}
-                  title={`Check out this book: ${selectedBook.title}`}
-                  className="flex items-center"
-                >
-                  <FacebookIcon size={32} round />
-                </FacebookShareButton>
-                <ViberShareButton
-                  url={selectedBook.readLink}
-                  title={`Check out this book: ${selectedBook.title}`}
-                  className="flex items-center"
-                >
-                  <ViberIcon size={32} round />
-                </ViberShareButton>
-                <TelegramShareButton
-                  url={selectedBook.readLink}
-                  title={`Check out this book: ${selectedBook.title}`}
-                  className="flex items-center"
-                >
-                  <TelegramIcon size={32} round />
-                </TelegramShareButton>
-              </div>
-            </div>
-            <button 
-              onClick={handleClosePopup} 
-              className="absolute top-4 right-4 text-gray-600 hover:text-gray-900"
-            >
-              &times;
+        <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full relative">
+            <button onClick={handleClosePopup} className="absolute top-3 right-3 text-gray-500">
+              <FontAwesomeIcon icon={faTimes} />
             </button>
+            <h2 className="text-2xl font-semibold mb-4">{selectedBook.title}</h2>
+            <p className="mb-2"><strong>Author:</strong> {selectedBook.author}</p>
+            <p className="mb-2"><strong>Major:</strong> {selectedBook.major}</p>
+            <p className="mb-4"><strong>Status:</strong> {selectedBook.status}</p>
+            <p className="mb-4"><strong>Summary:</strong> {selectedBook.summary}</p>
+            <div className="flex gap-4">
+              {selectedBook.readLink && (
+                <a href={selectedBook.readLink} target="_blank" rel="noopener noreferrer" className="text-blue-500 flex items-center">
+                  Read <FontAwesomeIcon icon={faExternalLinkAlt} className="ml-2" />
+                </a>
+              )}
+              {selectedBook.downloadLink && (
+                <a href={selectedBook.downloadLink} target="_blank" rel="noopener noreferrer" className="text-blue-500 flex items-center">
+                  Download <FontAwesomeIcon icon={faDownload} className="ml-2" />
+                </a>
+              )}
+            </div>
+            <p className="mt-4"><strong>Location:</strong> {selectedBook.location}</p>
           </div>
         </div>
+      )}
+
+      {/* Back to Top Button */}
+      {showBackToTop && (
+        <button 
+          onClick={scrollToTop} 
+          className="fixed bottom-6 right-6 bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 transition"
+        >
+          <FontAwesomeIcon icon={faChevronUp} />
+        </button>
       )}
     </div>
   );
