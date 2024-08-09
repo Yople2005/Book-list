@@ -79,16 +79,16 @@ function App() {
   };
 
   return (
-    <div className="App min-h-screen bg-gray-100 p-3">
+    <div className="App min-h-screen bg-gray-100 pt-1 p-4">
       {/* Navigation & Header */}
-      <header className=" bg-blue-500 text-white p-3 rounded-lg shadow-lg mb-6 flex justify-between items-center sticky top-0 z-50">
+      <header className=" bg-blue-500 text-white p-3 rounded-lg shadow-lg flex justify-between items-center sticky top-0 z-50">
         <div className="flex items-center">
           <button onClick={() => setMenuOpen(!menuOpen)} className="text-white text-3xl mr-4">
             <FontAwesomeIcon icon={faBars} />
           </button>
           <div className="flex items-center">
-            <img src="logo.png" alt="Library Logo" className="w-10 h-10 mr-3 ml-5" />
-            <h1 className="text-3xl font-bold">Innovative Library</h1>
+            <img src="logo.png" alt="Library Logo" className="w-10 h-10 ml-2" />
+            <h1 className="text-2xl font-bold">Innovative Library</h1>
           </div>
         </div>
         <button onClick={() => setSearchOpen(!searchOpen)} className="text-white text-3xl">
@@ -113,7 +113,7 @@ function App() {
 
       {/* Search Bar & Filters */}
       {searchOpen && (
-        <div className="fixed top-16 left-3 right-3 w-auto bg-blue-100 p-4 rounded-b-lg shadow-lg z-40">
+        <div className="sticky top-16 left-3 right-3 bg-blue-100 p-4 rounded-b-lg shadow-lg z-40">
           <input
             type="text"
             value={query}
@@ -156,7 +156,7 @@ function App() {
       )}
 
       {/* Main Content */}
-      <main className="pt-20">
+      <main className="mt-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredBooks.length > 0 ? (
             filteredBooks.map((book, index) => (
