@@ -188,7 +188,7 @@ function App() {
           <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full relative">
           <button 
               onClick={handleClosePopup} 
-              className="absolute top-2 right-2 bg-red-500 text-white rounded-lg  p-2 text-gray-700 hover:text-gray-900"
+              className="absolute bottom-2 right-2 bg-red-500 text-white rounded-lg  p-2 text-gray-700 hover:text-gray-900"
             >
               Close
             </button>
