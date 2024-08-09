@@ -98,14 +98,16 @@ function App() {
 
       {/* Side Navigation Menu */}
       {menuOpen && (
-        <nav className="fixed inset-y-0 left-0 w-64 bg-blue-700 text-white p-6 z-50 shadow-lg">
-          <button onClick={() => setMenuOpen(false)} className="text-white mb-6">
+        <nav className="fixed inset-y-0 left-0 w-40 bg-blue-700 bg-opacity-90 text-white p-6 z-50 shadow-lg">
+          <button onClick={() => setMenuOpen(false)} className="text-white mb-6 text-3xl hover:text-gray-200">
             <FontAwesomeIcon icon={faTimes} />
           </button>
           <ul className="space-y-4">
             <li><a href="#home" className="hover:text-gray-200">Home</a></li>
-            <li><a href="#about" className="hover:text-gray-200">About</a></li>
-            <li><a href="#contact" className="hover:text-gray-200">Contact</a></li>
+            <li><a href="#feature" className="hover:text-gray-200">Features</a></li>
+            <li><a href="#about-us" className="hover:text-gray-200">About Us</a></li>
+            <li><a href="#faq" className="hover:text-gray-200">FAQ</a></li>
+            <li><a href="#contact-us" className="hover:text-gray-200">Contact Us</a></li>
             {/* Add more navigation links as needed */}
           </ul>
         </nav>
