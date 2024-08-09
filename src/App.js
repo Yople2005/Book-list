@@ -196,6 +196,7 @@ function App() {
             <p className="mb-2"><strong>Author:</strong> {selectedBook.author}</p>
             <p className="mb-2"><strong>Major:</strong> {selectedBook.major}</p>
             <p className="mb-4"><strong>Status:</strong> {selectedBook.status}</p>
+            <p className="mt-4"><strong>Location:</strong> {selectedBook.location}</p>
             <div className="space-y-2 mb-4">
               <a href={selectedBook.readLink} target="_blank" rel="noopener noreferrer" className="block p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
                 <FontAwesomeIcon icon={faExternalLinkAlt} className="mr-2" />Read Link
@@ -204,7 +205,7 @@ function App() {
                 <FontAwesomeIcon icon={faDownload} className="mr-2" />Download Link
               </a>
             </div>
-            <p className="mt-4"><strong>Location:</strong> {selectedBook.location}</p>
+            
             <div className="space-y mb-4 flex space-x-4 relative top-4">
               <span className=" text-bold relative">Share on:</span>
               <FacebookShareButton url={selectedBook.readLink} className="focus:outline-none">
