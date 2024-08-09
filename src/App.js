@@ -79,7 +79,7 @@ function App() {
   };
 
   return (
-    <div className="App min-h-screen bg-gray-100 pt-1 p-4">
+    <div className="App min-h-screen bg-gray-100 pt-1 p-3">
       {/* Navigation & Header */}
       <header className=" bg-blue-500 text-white p-3 rounded-lg shadow-lg flex justify-between items-center sticky top-0 z-50">
         <div className="flex items-center">
