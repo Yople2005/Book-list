@@ -79,7 +79,7 @@ function App() {
   };
 
   return (
-    <div className="App min-h-screen bg-gray-100 pt-1 p-3">
+    <div className="App min-h-screen bg-gray-100 pt-1 p-4">
       {/* Navigation & Header */}
       <header className=" bg-blue-500 text-white p-3 rounded-lg shadow-lg flex justify-between items-center sticky top-0 z-50">
         <div className="flex items-center">
@@ -195,9 +195,9 @@ function App() {
             <h2 className="text-2xl font-semibold mb-4">{selectedBook.title}</h2>
             <p className="mb-2"><strong>Author:</strong> {selectedBook.author}</p>
             <p className="mb-2"><strong>Major:</strong> {selectedBook.major}</p>
-            <p className="mb-4"><strong>Status:</strong> {selectedBook.status}</p>
-            <p className="mt-4"><strong>Location:</strong> {selectedBook.location}</p>
-            <div className="space-y-2 mb-4">
+            <p className="mb-2"><strong>Status:</strong> {selectedBook.status}</p>
+            <p className="mb-4"><strong>Location:</strong> {selectedBook.location}</p>
+            <div className="space-y-2 mb-2">
               <a href={selectedBook.readLink} target="_blank" rel="noopener noreferrer" className="block p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
                 <FontAwesomeIcon icon={faExternalLinkAlt} className="mr-2" />Read Link
               </a>
@@ -205,7 +205,7 @@ function App() {
                 <FontAwesomeIcon icon={faDownload} className="mr-2" />Download Link
               </a>
             </div>
-            
+          
             <div className="space-y mb-4 flex space-x-4 relative top-4">
               <span className=" text-bold relative">Share on:</span>
               <FacebookShareButton url={selectedBook.readLink} className="focus:outline-none">
