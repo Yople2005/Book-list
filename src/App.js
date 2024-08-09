@@ -186,29 +186,41 @@ function App() {
       {selectedBook && (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full relative">
-            <button onClick={handleClosePopup} className="absolute top-3 right-3 text-gray-500">
-              <FontAwesomeIcon icon={faTimes} />
+          <button 
+              onClick={handleClosePopup} 
+              className="absolute top-2 right-2 bg-red-500 text-white rounded-lg  p-2 text-gray-700 hover:text-gray-900"
+            >
+              Close
             </button>
             <h2 className="text-2xl font-semibold mb-4">{selectedBook.title}</h2>
             <p className="mb-2"><strong>Author:</strong> {selectedBook.author}</p>
             <p className="mb-2"><strong>Major:</strong> {selectedBook.major}</p>
             <p className="mb-4"><strong>Status:</strong> {selectedBook.status}</p>
-            <p className="mb-4"><strong>Summary:</strong> {selectedBook.summary}</p>
-            <div className="flex gap-4">
-              {selectedBook.readLink && (
-                <a href={selectedBook.readLink} target="_blank" rel="noopener noreferrer" className="text-blue-500 flex items-center">
-                  Read <FontAwesomeIcon icon={faExternalLinkAlt} className="ml-2" />
-                </a>
-              )}
-              {selectedBook.downloadLink && (
-                <a href={selectedBook.downloadLink} target="_blank" rel="noopener noreferrer" className="text-blue-500 flex items-center">
-                  Download <FontAwesomeIcon icon={faDownload} className="ml-2" />
-                </a>
-              )}
+            <div className="space-y-2 mb-4">
+              <a href={selectedBook.readLink} target="_blank" rel="noopener noreferrer" className="block p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+                <FontAwesomeIcon icon={faExternalLinkAlt} className="mr-2" />Read Link
+              </a>
+              <a href={selectedBook.downloadLink} target="_blank" rel="noopener noreferrer" className="block p-2 bg-green-500 text-white rounded-lg hover:bg-green-600">
+                <FontAwesomeIcon icon={faDownload} className="mr-2" />Download Link
+              </a>
             </div>
             <p className="mt-4"><strong>Location:</strong> {selectedBook.location}</p>
+            <div className="space-y mb-4 flex space-x-4 relative top-4">
+              <span className=" text-bold relative">Share on:</span>
+              <FacebookShareButton url={selectedBook.readLink} className="focus:outline-none">
+                <FacebookIcon size={32} round />
+              </FacebookShareButton>
+              <ViberShareButton url={selectedBook.readLink} className="focus:outline-none">
+                <ViberIcon size={32} round />
+              </ViberShareButton>
+              <TelegramShareButton url={selectedBook.readLink} className="focus:outline-none">
+                <TelegramIcon size={32} round />
+              </TelegramShareButton>
+            </div>
           </div>
+          
         </div>
+        
       )}
 
       {/* Back to Top Button */}
