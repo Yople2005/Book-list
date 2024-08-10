@@ -87,8 +87,8 @@ function App() {
             <FontAwesomeIcon icon={faBars} />
           </button>
           <div className="flex items-center">
-            <a href = "https:innovative-library.netlify.app"><img src="logo.png" alt="Library Logo" className="w-10 h-10 ml-2" />
-            <h1 className="text-2xl font-bold">Innovative Library</h1></a>
+            <a href = "https:innovative-library.netlify.app"><img src="logo.png" alt="Library Logo" className="w-10 h-10 ml-2" /></a>
+           <a href = "https:innovative-library.netlify.app"> <h1 className="text-2xl font-bold">Innovative Library</h1></a>
           </div>
         </div>
         <button onClick={() => setSearchOpen(!searchOpen)} className="text-white text-3xl">
