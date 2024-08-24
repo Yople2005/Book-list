@@ -20,7 +20,7 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://sheets.googleapis.com/v4/spreadsheets/1rrkZkt2GHRdSGi-zrqRgiseThigJ5aF41uLTq2UdliM/values/Sheet1?key=AIzaSyDY9bw7SI7wUnWn3iGu2E4dvthqD7BUb3U');
+        const response = await fetch('https://sheets.googleapis.com/v4/spreadsheets/1XD3KFaY1Zh4S8OwlG7NGwq8ZxlomTbMJOqZ_GJtiZW4/values/Books?key=AIzaSyDY9bw7SI7wUnWn3iGu2E4dvthqD7BUb3U');
         const data = await response.json();
         const rows = data.values.slice(1);
         const books = rows.map(row => ({
@@ -167,7 +167,7 @@ function App() {
                 <p className="text-gray-700">ID: {book.id}</p>
                 <p className="text-gray-700">Author: {book.author}</p>
                 <p className="text-gray-700">Major: {book.major}</p>
-                <p className={text-gray-700 font-semibold ${book.status === 'Available' ? 'text-green-600' : 'text-red-600'}}>
+                <p className={`text-gray-700 font-semibold ${book.status === 'Available' ? 'text-green-600' : 'text-red-600'}`}>
                   Status: {book.status}
                 </p>
                 <button 
