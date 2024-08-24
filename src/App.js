@@ -17,32 +17,30 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
 
- useEffect(() => {
-  const fetchData = async () => {
-    try {
-      // Updated URL for the new spreadsheet and sheet name
-      const response = await fetch('https://sheets.googleapis.com/v4/spreadsheets/1XD3KFaY1Zh4S8OwlG7NGwq8ZxlomTbMJOqZ_GJtiZW4/values/Books?key=AIzaSyDY9bw7SI7wUnWn3iGu2E4dvthqD7BUb3U');
-      const data = await response.json();
-      const rows = data.values.slice(1); // Adjust if your sheet includes headers
-      const books = rows.map(row => ({
-        id: row[0],
-        title: row[1],
-        author: row[2],
-        major: row[3],
-        status: row[4],
-        summary: row[5], // Adjust these if necessary
-        readLink: row[6],
-        downloadLink: row[7],
-        location: row[8]
-      }));
-      setBooks(books);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
-  fetchData();
-}, []);
-
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('https://sheets.googleapis.com/v4/spreadsheets/1XD3KFaY1Zh4S8OwlG7NGwq8ZxlomTbMJOqZ_GJtiZW4/values/Books?key=AIzaSyDY9bw7SI7wUnWn3iGu2E4dvthqD7BUb3U');
+        const data = await response.json();
+        const rows = data.values.slice(1);
+        const books = rows.map(row => ({
+          id: row[0],
+          title: row[1],
+          author: row[2],
+          major: row[3],
+          status: row[4],
+          summary: row[5],
+          readLink: row[6],
+          downloadLink: row[7],
+          location: row[8]
+        }));
+        setBooks(books);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -117,7 +115,7 @@ function App() {
 
       {/* Search Bar & Filters */}
       {searchOpen && (
-        <div className="sticky top-16 left-3 right-3 bg-custom-green p-4 rounded-b-lg shadow-lg z-40">
+        <div className="sticky top-16 left-3 right-3 bg-blue-100 p-4 rounded-b-lg shadow-lg z-40">
           <input
             type="text"
             value={query}
