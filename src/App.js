@@ -25,15 +25,15 @@ function App() {
         const data = await response.json();
         const rows = data.values.slice(1); // Adjust if your sheet includes headers
         const books = rows.map(row => ({
-          id: row[0],
-          title: row[1],
-          author: row[2],
-          major: row[3],
-          status: row[4],
-          summary: row[5], // Adjust these if necessary
-          readLink: row[6],
-          downloadLink: row[7],
-          location: row[8]
+          id: row[0] || '',
+          title: row[1] || '',
+          author: row[2] || '',
+          major: row[3] || '',
+          status: row[4] || '',
+          summary: row[5] || '', // Adjust these if necessary
+          readLink: row[6] || '',
+          downloadLink: row[7] || '',
+          location: row[8] || ''
         }));
         setBooks(books);
       } catch (error) {
@@ -58,8 +58,10 @@ function App() {
 
   useEffect(() => {
     const filtered = books.filter(book => {
-      const matchesQuery = book.title.toLowerCase().includes(query.toLowerCase()) ||
-                            book.author.toLowerCase().includes(query.toLowerCase());
+      const title = book.title ? book.title.toLowerCase() : '';
+      const author = book.author ? book.author.toLowerCase() : '';
+      const matchesQuery = title.includes(query.toLowerCase()) ||
+                            author.includes(query.toLowerCase());
       const matchesMajor = majorFilter ? book.major === majorFilter : true;
       const matchesStatus = statusFilter ? book.status === statusFilter : true;
       return matchesQuery && matchesMajor && matchesStatus;
@@ -163,12 +165,11 @@ function App() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredBooks.length > 0 ? (
             filteredBooks.map((book, index) => (
-              <div key={book.id} className="bg-white p-4 border border-gray-300 rounded-lg shadow-md">
-                <h2 className="text-xl font-semibold mb-2">{index + 1}. {book.title}</h2>
-                <p className="text-gray-700">ID: {book.id}</p>
-                <p className="text-gray-700">Author: {book.author}</p>
-                <p className="text-gray-700">Major: {book.major}</p>
-                <p className={`text-gray-700 font-semibold ${book.status === 'Available' ? 'text-green-600' : 'text-red-600'}`}>Status: {book.status}</p>
+              <div key={index} className="bg-white p-4 rounded-lg shadow-lg">
+                <h3 className="text-xl font-semibold">{book.title}</h3>
+                <p><strong>Author:</strong> {book.author}</p>
+                <p><strong>Major:</strong> {book.major}</p>
+                <p className={`font-semibold ${book.status === 'Available' ? 'text-green-600' : 'text-red-600'}`}>Status: {book.status}</p>
                 <button
                   onClick={() => handleSeeMore(book)}
                   className="text-blue-500 hover:text-blue-700 mt-2 flex items-center"
