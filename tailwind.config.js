@@ -3,8 +3,12 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
     "./public/index.html",
   ],
-  theme: {
-    extend: {},
+ heme: {
+    extend: {
+      colors: {
+        'custom-green': '#26d796',
+      },
+    },
   },
   plugins: [],
 }
