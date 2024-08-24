@@ -115,7 +115,7 @@ function App() {
 
       {/* Search Bar & Filters */}
       {searchOpen && (
-        <div className="sticky top-16 left-3 right-3 bg-blue-100 p-4 rounded-b-lg shadow-lg z-40">
+        <div className="sticky top-16 left-3 right-3 bg-custom-green p-4 rounded-b-lg shadow-lg z-40">
           <input
             type="text"
             value={query}
