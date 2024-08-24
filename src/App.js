@@ -20,19 +20,20 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // Updated URL for the new spreadsheet and sheet name
         const response = await fetch('https://sheets.googleapis.com/v4/spreadsheets/1XD3KFaY1Zh4S8OwlG7NGwq8ZxlomTbMJOqZ_GJtiZW4/values/Books?key=AIzaSyDY9bw7SI7wUnWn3iGu2E4dvthqD7BUb3U');
         const data = await response.json();
-        const rows = data.values.slice(1);
+        const rows = data.values.slice(1); // Adjust if your sheet includes headers
         const books = rows.map(row => ({
-          id: row[0],
-          title: row[1],
-          author: row[2],
-          major: row[3],
-          status: row[4],
-          summary: row[5],
-          readLink: row[6],
-          downloadLink: row[7],
-          location: row[8]
+          id: row[0] || '',
+          title: row[1] || '',
+          author: row[2] || '',
+          major: row[3] || '',
+          status: row[4] || '',
+          summary: row[5] || '', // Adjust these if necessary
+          readLink: row[6] || '',
+          downloadLink: row[7] || '',
+          location: row[8] || ''
         }));
         setBooks(books);
       } catch (error) {
@@ -57,8 +58,10 @@ function App() {
 
   useEffect(() => {
     const filtered = books.filter(book => {
-      const matchesQuery = book.title.toLowerCase().includes(query.toLowerCase()) ||
-                            book.author.toLowerCase().includes(query.toLowerCase());
+      const title = book.title ? book.title.toLowerCase() : '';
+      const author = book.author ? book.author.toLowerCase() : '';
+      const matchesQuery = title.includes(query.toLowerCase()) ||
+                            author.includes(query.toLowerCase());
       const matchesMajor = majorFilter ? book.major === majorFilter : true;
       const matchesStatus = statusFilter ? book.status === statusFilter : true;
       return matchesQuery && matchesMajor && matchesStatus;
@@ -81,14 +84,14 @@ function App() {
   return (
     <div className="App min-h-screen bg-gray-100 pt-1 p-4">
       {/* Navigation & Header */}
-      <header className=" bg-blue-500 text-white p-3 rounded-lg shadow-lg flex justify-between items-center sticky top-0 z-50">
+      <header className="bg-blue-500 text-white p-3 rounded-lg shadow-lg flex justify-between items-center sticky top-0 z-50">
         <div className="flex items-center">
           <button onClick={() => setMenuOpen(!menuOpen)} className="text-white text-3xl mr-4">
             <FontAwesomeIcon icon={faBars} />
           </button>
           <div className="flex items-center">
-            <a href = "https:innovative-library.netlify.app"><img src="logo.png" alt="Library Logo" className="w-10 h-10 ml-2" /></a>
-           <a href = "https:innovative-library.netlify.app"> <h1 className="text-2xl font-bold">Innovative Library</h1></a>
+            <a href="https://innovative-library.netlify.app"><img src="logo.png" alt="Library Logo" className="w-10 h-10 ml-2" /></a>
+            <a href="https://innovative-library.netlify.app"><h1 className="text-2xl font-bold">Innovative Library</h1></a>
           </div>
         </div>
         <button onClick={() => setSearchOpen(!searchOpen)} className="text-white text-3xl">
@@ -162,75 +165,77 @@ function App() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredBooks.length > 0 ? (
             filteredBooks.map((book, index) => (
-              <div key={book.id} className="bg-white p-4 border border-gray-300 rounded-lg shadow-md">
-                <h2 className="text-xl font-semibold mb-2">{index + 1}. {book.title}</h2>
-                <p className="text-gray-700">ID: {book.id}</p>
-                <p className="text-gray-700">Author: {book.author}</p>
-                <p className="text-gray-700">Major: {book.major}</p>
-                <p className={`text-gray-700 font-semibold ${book.status === 'Available' ? 'text-green-600' : 'text-red-600'}`}>
-                  Status: {book.status}
-                </p>
-                <button 
-                  onClick={() => handleSeeMore(book)} 
-                  className="mt-4 p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+              <div key={index} className="bg-white p-4 rounded-lg shadow-lg">
+                <h3 className="text-xl font-semibold">{book.title}</h3>
+                <p><strong>Author:</strong> {book.author}</p>
+                <p><strong>Major:</strong> {book.major}</p>
+                <p className={`font-semibold ${book.status === 'Available' ? 'text-green-600' : 'text-red-600'}`}>Status: {book.status}</p>
+                <button
+                  onClick={() => handleSeeMore(book)}
+                  className="text-blue-500 hover:text-blue-700 mt-2 flex items-center"
                 >
                   See More
+                  <FontAwesomeIcon icon={faExternalLinkAlt} className="ml-2" />
                 </button>
               </div>
             ))
           ) : (
-            <p>No books found</p>
+            <p>No books found.</p>
           )}
         </div>
       </main>
 
       {/* Book Popup */}
       {selectedBook && (
-        <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full relative">
-          <button 
-              onClick={handleClosePopup} 
-              className="absolute bottom-2 right-2 bg-red-500 text-white rounded-lg  p-2 text-gray-700 hover:text-gray-900"
-            >
-              Close
+        <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
+            <button onClick={handleClosePopup} className="text-red-500 hover:text-red-700 text-xl absolute top-3 right-3">
+              <FontAwesomeIcon icon={faTimes} />
             </button>
             <h2 className="text-2xl font-semibold mb-4">{selectedBook.title}</h2>
-            <p className="mb-2"><strong>Author:</strong> {selectedBook.author}</p>
-            <p className="mb-2"><strong>Major:</strong> {selectedBook.major}</p>
-            <p className="mb-2"><strong>Status:</strong> {selectedBook.status}</p>
-            <p className="mb-4"><strong>Location:</strong> {selectedBook.location}</p>
-            <div className="space-y-2 mb-2">
-              <a href={selectedBook.readLink} target="_blank" rel="noopener noreferrer" className="block p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
-                <FontAwesomeIcon icon={faExternalLinkAlt} className="mr-2" />Read Link
-              </a>
-              <a href={selectedBook.downloadLink} target="_blank" rel="noopener noreferrer" className="block p-2 bg-green-500 text-white rounded-lg hover:bg-green-600">
-                <FontAwesomeIcon icon={faDownload} className="mr-2" />Download Link
-              </a>
-            </div>
-          
-            <div className="space-y mb-4 flex space-x-4 relative top-4">
-              <span className=" text-bold relative">Share on:</span>
-              <FacebookShareButton url={selectedBook.readLink} className="focus:outline-none">
+            <p><strong>Author:</strong> {selectedBook.author}</p>
+            <p><strong>Major:</strong> {selectedBook.major}</p>
+            <p><strong>Status:</strong> <span className={`font-semibold ${selectedBook.status === 'Available' ? 'text-green-600' : 'text-red-600'}`}>{selectedBook.status}</span></p>
+            <p><strong>Summary:</strong> {selectedBook.summary}</p>
+            {selectedBook.readLink && (
+              <p className="mt-2">
+                <a href={selectedBook.readLink} className="text-blue-500 hover:text-blue-700" target="_blank" rel="noopener noreferrer">
+                  <FontAwesomeIcon icon={faExternalLinkAlt} className="mr-2" /> Read Online
+                </a>
+              </p>
+            )}
+            {selectedBook.downloadLink && (
+              <p className="mt-2">
+                <a href={selectedBook.downloadLink} className="text-blue-500 hover:text-blue-700" target="_blank" rel="noopener noreferrer">
+                  <FontAwesomeIcon icon={faDownload} className="mr-2" /> Download PDF
+                </a>
+              </p>
+            )}
+            {selectedBook.location && (
+              <p className="mt-2">
+                <strong>Location:</strong> {selectedBook.location}
+              </p>
+            )}
+            <div className="mt-4 flex space-x-3">
+              <FacebookShareButton url={`https://innovative-library.netlify.app`} quote={selectedBook.title}>
                 <FacebookIcon size={32} round />
               </FacebookShareButton>
-              <ViberShareButton url={selectedBook.readLink} className="focus:outline-none">
+              <ViberShareButton url={`https://innovative-library.netlify.app`} title={selectedBook.title}>
                 <ViberIcon size={32} round />
               </ViberShareButton>
-              <TelegramShareButton url={selectedBook.readLink} className="focus:outline-none">
+              <TelegramShareButton url={`https://innovative-library.netlify.app`} title={selectedBook.title}>
                 <TelegramIcon size={32} round />
               </TelegramShareButton>
             </div>
           </div>
-          
         </div>
-        
       )}
 
       {/* Back to Top Button */}
       {showBackToTop && (
-        <button 
-          onClick={scrollToTop} 
-          className="fixed bottom-6 right-6 bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 transition"
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-4 right-4 bg-blue-500 text-white p-3 rounded-full shadow-lg z-50"
         >
           <FontAwesomeIcon icon={faChevronUp} />
         </button>
