@@ -81,7 +81,7 @@ function App() {
   return (
     <div className="App min-h-screen bg-gray-100 pt-1 p-4">
       {/* Navigation & Header */}
-      <header className=" bg-blue-500 text-white p-3 rounded-lg shadow-lg flex justify-between items-center sticky top-0 z-50">
+      <header className=" bg-black-500 text-white p-3 rounded-lg shadow-lg flex justify-between items-center sticky top-0 z-50">
         <div className="flex items-center">
           <button onClick={() => setMenuOpen(!menuOpen)} className="text-white text-3xl mr-4">
             <FontAwesomeIcon icon={faBars} />
