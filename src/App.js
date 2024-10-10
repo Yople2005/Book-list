@@ -86,8 +86,12 @@ function App() {
             <FontAwesomeIcon icon={faTimes} />
           </button>
           <ul className="space-y-4">
-            <li><a href="https://innovative-library.netlify.app/" className="hover:text-gray-200">Home</a></li>
-            {/* Add more navigation links as needed */}
+            <li><a href="#home" className="hover:text-gray-200">Home</a></li>
+            <li><a href="#feature" className="hover:text-gray-200">Features</a></li>
+            <li><a href="#about-us" className="hover:text-gray-200">About Us</a></li>
+            <li><a href="#faq" className="hover:text-gray-200">FAQ</a></li>
+            <li><a href="#contact-us" className="hover:text-gray-200">Contact Us</a></li>
+           
           </ul>
         </nav>
       )}
