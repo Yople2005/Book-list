@@ -208,18 +208,7 @@ return (
               </a>
             </div>
           
-            <div className="space-y mb-4 flex space-x-4 relative top-4">
-              <span className=" text-bold relative">Share on:</span>
-              <FacebookShareButton url={selectedBook.readLink} className="focus:outline-none">
-                <FacebookIcon size={32} round />
-              </FacebookShareButton>
-              <ViberShareButton url={selectedBook.readLink} className="focus:outline-none">
-                <ViberIcon size={32} round />
-              </ViberShareButton>
-              <TelegramShareButton url={selectedBook.readLink} className="focus:outline-none">
-                <TelegramIcon size={32} round />
-              </TelegramShareButton>
-            </div>
+          
           </div>
           
         </div>
