@@ -77,11 +77,10 @@ function App() {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-
-  return (
+return (
     <div className="App min-h-screen bg-gray-100 pt-1 p-4">
       {/* Navigation & Header */}
-      <header className=" bg-black-500 text-white p-3 rounded-lg shadow-lg flex justify-between items-center sticky top-0 z-50">
+      <header className="bg-zinc-700 text-white p-3 rounded-lg shadow-lg flex justify-between items-center sticky top-0 z-50">
         <div className="flex items-center">
           <button onClick={() => setMenuOpen(!menuOpen)} className="text-white text-3xl mr-4">
             <FontAwesomeIcon icon={faBars} />
@@ -98,16 +97,17 @@ function App() {
 
       {/* Side Navigation Menu */}
       {menuOpen && (
-        <nav className="fixed inset-y-0 left-0 w-40 bg-blue-700 bg-opacity-90 text-white p-6 z-50 shadow-lg">
+        <nav className="fixed inset-y-0 left-0 w-40 bg-green-500 bg-opacity-90 text-white p-6 z-50 shadow-lg">
           <button onClick={() => setMenuOpen(false)} className="text-white mb-6 text-3xl hover:text-gray-200">
             <FontAwesomeIcon icon={faTimes} />
           </button>
           <ul className="space-y-4">
-            <li><a href="#home" className="hover:text-gray-200">Home</a></li>
-            <li><a href="#feature" className="hover:text-gray-200">Features</a></li>
-            <li><a href="#about-us" className="hover:text-gray-200">About Us</a></li>
-            <li><a href="#faq" className="hover:text-gray-200">FAQ</a></li>
-            <li><a href="#contact-us" className="hover:text-gray-200">Contact Us</a></li>
+            <li><a href="https://innovative-library.netlify.app/" className="hover:text-gray-200">Home</a></li>
+            <li><a href="https://innovative-library.netlify.app/about" className="hover:text-gray-200">Features</a></li>
+            <li><a href="https://innovative-library.netlify.app/feature" className="hover:text-gray-200">About Us</a></li>
+            <li><a href="https://innovative-library.netlify.app/team" className="hover:text-gray-200">Our Team</a></li>
+            <li><a href="https://innovative-library.netlify.app/faq" className="hover:text-gray-200">FAQ</a></li>
+            <li><a href="https://innovative-library.netlify.app/contact" className="hover:text-gray-200">Contact Us</a></li>
             {/* Add more navigation links as needed */}
           </ul>
         </nav>
@@ -115,7 +115,7 @@ function App() {
 
       {/* Search Bar & Filters */}
       {searchOpen && (
-        <div className="sticky top-16 left-3 right-3 bg-blue-100 p-4 rounded-b-lg shadow-lg z-40">
+        <div className="sticky top-16 left-3 right-3 bg-green-200 p-4 rounded-b-lg shadow-lg z-40">
           <input
             type="text"
             value={query}
