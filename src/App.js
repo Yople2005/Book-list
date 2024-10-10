@@ -13,11 +13,14 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('https://sheets.googleapis.com/v4/spreadsheets/1rrkZkt2GHRdSGi-zrqRgiseThigJ5aF41uLTq2UdliM/values/Books?key=AIzaSyA0QVEXGLXO__rv-ZdulMElFoJDbLKeP1w');
-        const data = await response.json();
+ useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const response = await fetch('https://sheets.googleapis.com/v4/spreadsheets/1rrkZkt2GHRdSGi-zrqRgiseThigJ5aF41uLTq2UdliM/values/Books?key=AIzaSyA0QVEXGLXO__rv-ZdulMElFoJDbLKeP1w');
+
+      const data = await response.json();
+      console.log(data); // Log the entire response
+      if (data.values && data.values.length > 1) {
         const rows = data.values.slice(1);
         const books = rows.map(row => ({
           id: row[0],
@@ -31,12 +34,16 @@ function App() {
           location: row[8]
         }));
         setBooks(books);
-      } catch (error) {
-        console.error('Error fetching data:', error);
+      } else {
+        console.error('No data available in the response');
       }
-    };
-    fetchData();
-  }, []);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+  fetchData();
+}, []);
+
 
   useEffect(() => {
     const handleScroll = () => {
