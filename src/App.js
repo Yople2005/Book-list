@@ -116,7 +116,11 @@ function App() {
                 <option value="">All Majors</option>
                 <option value="Civil">Civil</option>
                 <option value="Architecture">Architecture</option>
+                  <option value="Electrical Power">Electrical Power</option>
+                  <option value="Mechanical">Mechanical</option>
+                  <option value="Electronics">Electronics</option>
                 <option value="Information Technology">Information Technology</option>
+               <option value="Mechatronics">Mechatronics</option>
                 {/* Add other majors */}
               </select>
               <FontAwesomeIcon icon={faChevronDown} className="absolute right-3 text-green-900" style={{ top: '50%', transform: 'translateY(-50%)' }} />
