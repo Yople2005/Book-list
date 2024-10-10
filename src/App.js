@@ -16,7 +16,7 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://sheets.googleapis.com/v4/spreadsheets/1XD3KFaY1Zh4S8OwlG7NGwq8ZxlomTbMJOqZ_GJtiZW4/values/Books?key=YOUR_API_KEY');
+        const response = await fetch('https://sheets.googleapis.com/v4/spreadsheets/1rrkZkt2GHRdSGi-zrqRgiseThigJ5aF41uLTq2UdliM/values/Books?key=AIzaSyA0QVEXGLXO__rv-ZdulMElFoJDbLKeP1w');
         const data = await response.json();
         const rows = data.values.slice(1);
         const books = rows.map(row => ({
