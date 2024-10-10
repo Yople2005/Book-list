@@ -148,7 +148,7 @@ function App() {
                 </p>
                 <button 
                   onClick={() => handleSeeMore(book)} 
-                  className="mt-4 p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+                  className="mt-4 p-2 bg-green-400 text-white rounded-lg hover:bg-blue-600"
                 >
                   See More
                 </button>
